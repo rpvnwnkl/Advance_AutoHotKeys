@@ -1,0 +1,93 @@
+
+
+Starting call results from 2018-08-13...
+	Marking ID# 134715 for No Telefund
+	Marking ID# 9978 for No Telefund
+	Marking ID# 86892 for No Telefund
+	Marking ID# 132261 for Full Withhold
+	Marking ID# 11605 for Full Withhold
+	Marking ID# 697683 for Full Withhold
+	Marking ID# 684625 for Full Withhold
+	Marking ID# 665964 for Full Withhold
+	Marking ID# 699293 for No Telefund
+	Marking ID# 15467 for No Telefund
+	Marking ID# 132286 for Full Withhold (Deceased)
+		Comment text: Died 8/4/16
+	Marking ID# 405065 for Full Withhold (Deceased)
+	Marking ID# 710406 for Full Withhold (Deceased)
+
+    Advance IDs processed: 13
+    Other IDs skipped during processing: 0
+
+
+Starting call results from 2018-08-02...
+	Marking ID# 0000697090 for No Telefund
+
+    Advance IDs processed: 1
+    Other IDs skipped during processing: 8
+
+
+Starting call results from 2018-08-05...
+
+    Advance IDs processed: 0
+    Other IDs skipped during processing: 6
+
+
+Starting call results from 2018-08-06...
+
+    Advance IDs processed: 0
+    Other IDs skipped during processing: 3
+
+
+Starting call results from 2018-08-09...
+	Marking ID# 0000682434 for No Telefund
+	Marking ID# 0000693200 for No Telefund
+
+    Advance IDs processed: 2
+    Other IDs skipped during processing: 5
+
+
+Starting call results from 2018-08-10...
+
+    Advance IDs processed: 0
+    Other IDs skipped during processing: 2
+
+
+Starting call results from 2018-08-11...
+
+    Advance IDs processed: 0
+    Other IDs skipped during processing: 3
+
+
+Starting call results from 2018-08-12...
+	Marking ID# 0000695591 for Full Withhold
+
+    Advance IDs processed: 1
+    Other IDs skipped during processing: 2
+
+
+Starting call results from 2018-08-02...
+	Marking ID# 0000697090 for No Telefund
+
+    Advance IDs processed: 1
+    Other IDs skipped during processing: 8
+
+
+Starting call results from 2018-08-05...
+
+    Advance IDs processed: 0
+    Other IDs skipped during processing: 6
+
+
+Starting call results from 2018-08-06...
+
+    Advance IDs processed: 0
+    Other IDs skipped during processing: 3
+
+
+Starting call results from 2018-08-09...
+	Marking ID# 0000682434 for No Telefund
+	Marking ID# 0000693200 for No Telefund
+
+    Advance IDs processed: 2
+    Other IDs skipped during processing: 5
