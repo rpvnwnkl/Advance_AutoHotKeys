@@ -12,3 +12,4 @@ This is a suite of programs built to accelerate data entry and processing in the
 
 * **Apps** is a directory holding copies of compiled programs.
 
+Built using AutoHotKey: [https://www.autohotkey.com]
