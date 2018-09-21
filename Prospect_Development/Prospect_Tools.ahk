@@ -45,7 +45,22 @@ return
     return
 }
 
+today()
+{
+    FormatTime, month,,MM
+    FormatTime, day,,dd
+    FormatTime, year,,yyyy
+    today = %month%/%day%/%year%
+    return today
+}
+
+#IfWinActive, Production Database
+^LButton::
+!^T::
+today := today()
+Send, %today%
 return
+
 ;close current window with ESC key
 #IfWinActive, Production Database 
 Esc::
@@ -53,8 +68,8 @@ Send, {CtrlDown}{F4}{CtrlUp}
 return
 
 ;open new entity search box and tab to last name
-; #IfWinActive, ADVTRN 
-; ^N::
-; Send, {ShiftDown}{F4}{ShiftUp}
-; Send, {TAB 3}
-; return
+#IfWinActive, Production Database 
+^N::
+Send, {ShiftDown}{F4}{ShiftUp}
+Send, {TAB 3}
+return
