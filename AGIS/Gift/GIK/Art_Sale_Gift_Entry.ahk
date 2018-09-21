@@ -64,7 +64,7 @@ createGUI()
     Gui, Add, Edit, x142 y190 w70 h20 vgiftAmtColumn, 3
     
     Gui, Add, Text, x32 y220 w200 h20 , GIK Reciept Description:
-    Gui, Add, Edit, x32 y239 w265 h80 vcomment, `n[gift ratio] of the value of artwork sold during the SMFA at Tufts Art Sale, Nov. %thisYear%. 
+    Gui, Add, Edit, x32 y239 w265 h80 vcomment, `n[gift ratio]`% of the value of artwork sold during the SMFA at Tufts Art Sale, Nov. %thisYear%. 
     
     Gui, Font, S14 CGreen, Comic Sans MS
     Gui, Add, Button, x15 y329 w140 h70 , Start
@@ -84,23 +84,15 @@ createGUI()
 
     ButtonStop:
     {
-        ; IfEqual, A_IsPaused, 0
-        ; {
-        ;     ; msgbox, pausing
-        ;     Pause, On, 1 
-        ; } Else
-        ; {
-        ;     Pause, Off, 1
-        ; }
-        Pause, On, 1
         GuiControl, Disable, Stop
-        GuiControl, Enable, Start
+        ; GuiControl, Enable, Start
+        Pause, On
         return
     }
 
     ButtonStart:
     {
-        Pause, Off
+        ; Pause, Off, 1
         Gui, submit, NoHide
         ;gray out button
         GuiControl, Disable, Start
@@ -208,7 +200,7 @@ createNewGIK(advID, giftAmount, giftRatio, comment)
     Sleep, %delay%
     ; enter a newline for printer preferences
     ; Send, {Enter}
-    StringReplace, commentString, comment, [gift ratio], %giftRatio%+5, All
+    StringReplace, commentString, comment, [gift ratio], %giftRatio%, All
     Send, %commentString%
     Sleep, %delay%
 
