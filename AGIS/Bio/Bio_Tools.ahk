@@ -20,27 +20,18 @@ openCount = 0
 #Include moveTo.ahk
 
 ;Add informal Salutation
-; +^i::
-; Run, informal_live.ahk, ADV\SAL
-; Return
 #Include newEntitySalutation.ahk
 +^i::
 newEntitySalutation()
 return
 
 ;Add joint Salutation
-; +^j::
-; Run, joint_salutation_live.ahk, ADV\SAL
-; Return
 #Include createMarriedSals.ahk
 +^j::
 createMarriedSals()
 return
 
 ;Open ID in Advance
-; MButton::
-; Run, Open_ADV_ID_live.ahk, Open_\
-; return
 #Include Open_Adv_ID.ahk
 MButton::
 {
@@ -53,14 +44,17 @@ MButton::
 !^i::MsgBox, %openCount%
 
 ;Save TEAM Request as WIP
+#Include Team\saveTeamRequest.ahk
 #T::
-Run, Save_Request_live.ahk, TEAM\
+saveTeamRequest()
 return
 
 ;look up phone number
+#Include TEL\checkTelephone.ahk
+#IfWinActive, Production Database
 #C::
 {
-    Run, C_Check_Number_Live.ahk, ..\..\Advance\TEL
+    checkTelephone()
     return
 }
 
