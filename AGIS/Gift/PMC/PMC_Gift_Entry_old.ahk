@@ -51,7 +51,7 @@ createGUI()
     Gui, Font, S9 Norm CMaroon Bold, Verdana
     Gui, Add, Text, x10 y75 w85 h20 , Primary ID:
     Gui, Font, CBlack
-    Gui, Add, Edit, x95 y75 w75 h20 vprimaryIdNum, 293573
+    Gui, Add, Edit, x95 y75 w75 h20 , 293573
     
     Gui, Font, S8 Norm CRed Bold Italic, Verdana
     Gui, Add, Text, x22 y110 w100 h20 , Field:
@@ -158,13 +158,7 @@ createGUI()
     }
 }
 
-createNewPMC(primaryIdNum
-             , donorID
-             , spouseID
-             , fullGiftAmount
-             , legalGiftAmount
-             , runnerID
-             , anonFlag)
+createNewGIK(advID, giftAmount, giftRatio, comment)
 {
     global dbName
 
@@ -176,7 +170,7 @@ createNewPMC(primaryIdNum
     Sleep, %delay%
 
     ;Enter ID Num
-    Send, %primaryIdNum%
+    Send, %advID%
     Send, {Tab}
     Sleep, %delay%
 
@@ -189,17 +183,9 @@ createNewPMC(primaryIdNum
     moveTo(dbName)
 
     ;Enter total gift amount
-    Send, %legalGiftAmount%
+    Send, %giftAmount%
     Sleep, %delay%
-    ;check for Anon flag
-    if (anonGift = "Y") {
-        ;move to "Asc Type" field
-        Send, {AltDown}k{AltUp}
-        Sleep, %delay%
-        Send, {ShiftDown}{Tab}{ShiftUp}
-        Sleep, %delay%
-        Send, 2
-    }
+
     ; Save
     Send, {F8}
     Sleep, 20*%delay%
@@ -214,207 +200,53 @@ createNewPMC(primaryIdNum
         GuiControl, Enable, Start
         Exit
     }
-    ;###############################
-    ;ASSOCIATED DONORS WINDOW
-    ;##################################
+
+    ; Open tender window
     Send, {AltDown}{AltUp}
-    Send, G
+    Send, E
+    Send, T
+    tenderOpen := waitForWindow("Tender - (", 65)    
+    IfEqual, tenderOpen, 0
+    {
+        BlockInput, Off
+        MsgBox, Tender window couldn't open.
+        GuiControl, Enable, Start 
+        Exit
+    }
+
+    ; enter GIK type
+    Send, {TAB 7}
+    Sleep, %delay%
     Send, A
-    ; assocWindowOpen := waitForWindow("Associated", 65)    
-    ; IfEqual, assocWindowOpen, 0
-    ; {
-    ;     BlockInput, Off
-    ;     MsgBox, Associated Donors window couldn't open.
-    ;     GuiControl, Enable, Start 
-    ;     Exit
-    ; }
-    Sleep, 50
-    ;##################################
-    ;ASSOCIATED DONOR 1
-    ;##################################
-    ;add addt'l donor
-    Send, {F6}
-    ;Enter donorIdNum
-    Send, %donorId%
-    ;move to "Asc Type" field
-    Send, {AltDown}A{AltUp}\
-
-    ; check for alert
-    checkAlert(50)
-
-    ; close donor info window
-    moveTo("Gift Ledger") 
-    Send, O
-    moveTo(dbName)
-
-    ;ENTER  'D' for Donor advised type
-    Send, D
-    Sleep, %delay%
-   
-    ;move to credit field
-    Send, {AltDown}m{AltUp} 
-    Send, {TAB 4}
-    Sleep, %delay%
-  
-    ;change entry to full amount
-    Send, {ShiftDown}{CtrlDown}{Right}{CtrlUp}{ShiftUp}
-    Send, %fullGiftAmt%
     Sleep, %delay%
 
-    ; save
-    Send, {F8}
-    Sleep, 10*%delay%
-    
-    ;###########################################
-    ;Check for spouse ID and add to Assoc Donors 
-    ;###########################################
-    if (spouseIdNum > 0) 
-    {
-        ;MsgBox Spouse Found!
-        ;add spouse as addt'l donor
-        Send, {F6}
-
-        ;Enter spouseIdNum
-        Send, %spouseId%
-        ;move to "Asc Type" field
-        Send, {AltDown}A{AltUp}
-        Sleep, %delay%
-
-        ; check for alert
-        checkAlert(50)
-        ; close donor info window
-        moveTo("Gift Ledger") 
-        Send, O
-        moveTo(dbName)
-
-        ;ENTER  'D' for Donor advised type
-        Send, D
-        Sleep, %delay%
-
-        ;move to credit field
-        Send, {AltDown}m{AltUp} 
-        Send, {TAB 4}
-        Sleep, %delay%
-
-        ;change entry to full amount
-        Send, {ShiftDown}{CtrlDown}{Right}{CtrlUp}{ShiftUp}
-        Send, %fullGiftAmt%
-        Sleep, %delay%
-
-        ;save entry
-        Send, {F8}
-        Sleep, 10*%delay%
-
-        ;Fix first donor credit amount now
-        Send, {DOWN}
-        ;move to credit field
-        Send, {AltDown}m{AltUp} 
-        Send, {TAB 4}
-        Sleep, %delay%
-        ;change entry to full amount
-        Send, {ShiftDown}{CtrlDown}{Right}{CtrlUp}{ShiftUp}
-        Send, %fullGiftAmt%
-        Sleep, %delay%
-
-        ;save entry again
-        Send, {F8}
-        Sleep, 10*%delay%
-    }
-    ;###################################
-    ;IN HONOR OF DONOR/RUNNER
-    ;###################################
-    if (donorIdNum = runnerIdNum) 
-    {
-        ;change 'D' to 'H' in associated donor window
-        Send, {Down}
-        ;move to "Asc Type" field
-        Send, {AltDown}A{AltUp}
-        Sleep, %delay%
-        Send, H
-        ;save entry again
-        Send, {F8}
-        Sleep, 10*%delay%
-
-    }
-    if (spouseIdNum = runnerIdNum) 
-    {
-        ;change 'D' to 'H' in associated donor window
-        Send, {Down 2}
-        ;move to "Asc Type" field
-        Send, {AltDown}A{AltUp}
-        Sleep, %delay%
-        Send, H
-        ;save entry again
-        Send, {F8}
-        Sleep, 10*%delay%
-    } 
-    else if (runnerIdNum > 0 
-                and donorIdNum != runnerIdNum 
-                and spouseIdNum != runnerIdNum) 
-    {
-        ;add RUNNER as assoc. donor
-        Send, {F6}
-
-        ;Enter runnerId
-        Send, %runnerId%
-        ;move to "Asc Type" field
-        Send, {AltDown}A{AltUp}
-        Sleep, %delay%
-
-        ; check for alert
-        checkAlert(50)
-        ; close donor info window
-        moveTo("Gift Ledger") 
-        Send, O
-        moveTo(dbName)
-
-        ;ENTER  'H' for in-honor type
-        Send, H
-        Sleep, %delay%
-
-        ;save entry
-        Send, {F8}
-        Sleep, 10*%delay%
-    }
-    ;######################################
-    ;PRIMARY DONOR WINDOW
-    ;###############################
-    ;Update credit amount under primary donor 
-    ;Open Primary donors window
-    Send, {AltDown}{AltUp}
-    Send, G
-    Send, P
-    Sleep, 10*%delay%
-
-    ;move to Credit field, in two steps
-    Send, {AltDown}i{AltUp}
+    ; enter description
     Send, {TAB}
     Sleep, %delay%
-    Send, %fullGiftAmt%
+    ; enter a newline for printer preferences
+    ; Send, {Enter}
+    StringReplace, commentString, comment, [gift ratio], %giftRatio%+5, All
+    Send, %commentString%
+    Sleep, %delay%
 
-    ;save entry
+    ; save and exit tender window
     Send, {F8}
-    Sleep, 20*%delay%
-
-    ;back to square oneh
+    ; Sleep, 20*%delay%
+    closeWindows()
+    waitForWindow("Batch Gift Ledger")
     return
 }
 
-enterPMC_Gift(primaryIdNum
-              , donorIdColumn
-              , spouseIdColumn
-              , fullGiftAmtColumn
-              , legalGiftAmtColumn
-              , runnerIdColumn
-              , anonFlagColumn)
+enterPMC_Gift(primaryIdNum, donorIdColumn, spouseIdColumn, fullGiftAmtColumn
+              , legalGiftAmtColumn, runnerIdColumn, anonFlagColumn)
 {
     global dbName
 
     ; go to excel
     BlockInput, On
-    IfWinExist, ahk_class XLMAIN
+    IfWinExist, Excel
     {
-        moveTo("ahk_class XLMAIN")
+        moveTo("Excel")
     } Else
     {
         MsgBox, Excel isn't open.
@@ -429,8 +261,8 @@ enterPMC_Gift(primaryIdNum
     Send, {HOME}
     ; get advance ID
     nextColumn(donorIdcolumn)
-    donorID := CopyCell()
-    IfEqual, donorID,
+    advID := CopyCell()
+    IfEqual, advID,
     {
         ; no ID
         BlockInput, Off
@@ -439,19 +271,10 @@ enterPMC_Gift(primaryIdNum
     }
     ; get spouse ID
     nextColumn(spouseIdColumn, donorIdColumn)
-    spouseID := CopyCell()
+    giftRatio := CopyCell()
     ; get gift total
-    nextColumn(fullGiftAmtColumn, spouseIdColumn)
-    fullGiftAmount := CopyCell()
-    ; get net gift total
-    nextColumn(legalGiftAmtColumn, fullGiftAmtColumn)
-    legalGiftAmount := CopyCell()
-    ; get runner ID
-    nextColumn(runnerIdColumn, legalGiftAmtColumn)
-    runnerID := CopyCell()
-    ; get anon Flag
-    nextColumn(anonFlagColumn, runnerIdColumn)
-    anonFlag := CopyCell()
+    nextColumn(giftAmtColumn, giftRatioColumn)
+    giftAmount := CopyCell()
 
     ;####################################
     ;##### Enter data into advance ######
@@ -479,16 +302,11 @@ enterPMC_Gift(primaryIdNum
         Exit
     } 
     ; enter new gift
-    createNewPMC(primaryIdNum
-                 , donorID
-                 , spouseID
-                 , fullGiftAmount
-                 , legalGiftAmount
-                 , runnerID
-                 , anonFlag)
+    createNewGIK(advID, giftAmount, giftRatio, comment)
+    ; are there any other popups to look for?
 
     ; update excel
-    moveTo("ahk_class XLMAIN")
+    moveTo("Excel")
     ; need to go to beginning of row before coloring
     Send, {Home}
     Send, {AltDown}{AltUp}

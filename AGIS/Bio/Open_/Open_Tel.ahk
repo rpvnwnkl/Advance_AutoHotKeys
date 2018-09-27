@@ -36,7 +36,7 @@ callGoToBlank(tableText, entID)
     return
 }
 ;The middle mouse button launches the script
-#p::
+#t::
 SetTitleMatchMode, 2
 Sleep, 100
 
