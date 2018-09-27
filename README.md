@@ -2,7 +2,7 @@
 
 This is a suite of programs built to accelerate data entry and processing in the Ellucian Advance application, a database application to help non-profits record information about their constituents (donors and alumni).
 
-* **Library** contains common functions common to Advance. 
+* **Library** contains functions common to general use of Advance. 
 
 * **Advance** is mostly a store of older functions I built when first learning the tools/DB.
 
@@ -12,3 +12,4 @@ This is a suite of programs built to accelerate data entry and processing in the
 
 * **Apps** is a directory holding copies of compiled programs.
 
+Built using AutoHotKey: [https://www.autohotkey.com]
