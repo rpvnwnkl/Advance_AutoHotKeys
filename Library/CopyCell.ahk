@@ -1,7 +1,8 @@
 CopyCell()
 {
     Sleep, 10
-    clipboard = ;
+    oldClipboard = %clipboard%
+    clipboard =
     Send, {CTRLDOWN}c{CTRLUP}
     ClipWait, 1 ;
     cellOfInterest = %clipboard%
@@ -15,6 +16,6 @@ CopyCell()
         cellOfInterest = %clipboard%
         Send, {Esc}
     }
-    clipboard = ;
+    clipboard = %oldClipboard%
     return cellOfInterest
 }

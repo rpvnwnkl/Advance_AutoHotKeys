@@ -54,9 +54,10 @@ today()
     return today
 }
 
+;send today's date
 #IfWinActive, Production Database
 ^LButton::
-!^T::
++^T::
 today := today()
 Send, %today%
 return

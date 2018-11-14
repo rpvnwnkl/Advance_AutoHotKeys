@@ -13,5 +13,6 @@ createInformal(informalName)
     Send, ii
     ;save and then exit
     Send, {F8}
-    Send, {CTRLDOWN}{F4}{CTRLUP} 
+    Send, {CTRLDOWN}{F4}
+    Send, {CTRLUP} 
 }

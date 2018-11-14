@@ -1,6 +1,8 @@
+#INclude MoveTo.ahk
 callGoToBlank(tableText, entID)
 {
     global dbName
+    MoveTo(dbName)
     SetTitleMatchMode, 2
     Send, {F5} ;call up GoTo
     Sleep, 200
