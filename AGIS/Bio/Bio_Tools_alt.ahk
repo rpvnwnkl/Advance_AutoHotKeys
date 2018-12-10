@@ -44,13 +44,7 @@ MButton::
 ; #IfWinActive Bio_Tools
 !^i::MsgBox, %openCount%
 
-;Save TEAM Request as WIP
-#Include Team\saveTeamRequest.ahk
-#T::
-saveTeamRequest()
-return
-
-;look up phone number
+;look up phone number with Twilio
 #Include TEL\checkTelephone.ahk
 #IfWinActive, Production Database
 #C::
@@ -127,9 +121,71 @@ return
     return
 }
 
+;features for updating CTS
+#Include, windowPresent.ahk
+#Include, Bio\updateCTSInfo.ahk
+#IfWinActive, Production Database
+^1::
+{
+    If windowPresent("Affiliation")
+    {
+        updateCTSInfo("1701")
+    }
+    return
+}
+#IfWinActive, Production Database
+^2::
+{
+    If windowPresent("Affiliation")
+    {
+        updateCTSInfo("1702")
+    }
+    return
+}
+#IfWinActive, Production Database
+^3::
+{
+    If windowPresent("Affiliation")
+    {
+        updateCTSInfo("1703")
+    }
+    return
+}
+#IfWinActive, Production Database
+^4::
+{
+    If windowPresent("Affiliation")
+    {
+        updateCTSInfo("1704")
+    }
+    return
+}
+#IfWinActive, Production Database
+^5::
+{
+    If windowPresent("Affiliation")
+    {
+        updateCTSInfo("1705")
+    }
+    return
+}
+#IfWinActive, Production Database
+^6::
+{
+    If windowPresent("Affiliation")
+    {
+        updateCTSInfo("1706")
+    }
+    return
+}
+;##############################################
+;#### Instant Address
+;##############################################
+
 ;move Instant Address
 <!3::
 {
+    ; msgbox, hi
     MoveTo(dbName)
     Send, {AltDown}{3}
     Sleep, 10
@@ -148,3 +204,55 @@ return
     }
     return
 }
+
+;##############################################
+;#### TEAM 
+;##############################################
+
+;Save TEAM Request as WIP
+#Include Team\saveTeamRequest.ahk
+#IfWinActive, Team
+#T::
+saveTeamRequest()
+return
+
+;close active Team window
+#IfWinActive, Team Work Request
+Esc::
+{
+    Send, {AltDown}{F4}
+    Send, {AltUp}
+    return
+}
+
+;Open various windows from TEAM
+#Include TEAM\Open.ahk
+;Telephone
+#IfWinActive, Team
+^+T::
+{
+    Open("TEL")
+    return
+}
+;Address
+#IfWinActive, Team
+^+A::
+{
+    Open("ADDR")
+    return
+}
+;Email
+#IfWinActive, Team
+^+M::
+{
+    Open("EMAIL")
+    return
+}
+;Employment
+#IfWinActive, Team
+^+E::
+{
+    Open("EMPT")
+    return
+}
+

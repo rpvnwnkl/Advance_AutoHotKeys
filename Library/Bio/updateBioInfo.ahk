@@ -3,10 +3,15 @@
 #Include, copyCell.ahk
 #Include, Bio\makePastAddress.ahk
 #Include, Bio\makePastTelephone.ahk
-
+#Include, waitForWindow.ahk
 
 updateEmail(newStatus)
 {
+    currSelection := CopyCell()
+    IfEqual, currSelection,
+    {
+        Send, {TAB}
+    }
     IfEqual, newStatus, K
     {
         Send, {TAB 2}
@@ -17,7 +22,7 @@ updateEmail(newStatus)
     } Else IfEqual, newStatus, P
     {
         Send, {TAB}
-        Send, {Space}
+        ; Send, {Space}
         Send, {TAB}
         Send, I
         Send, {TAB 6}
@@ -40,25 +45,29 @@ updateAddress(newStatus)
     } Else IfEqual, newStatus, P
     {
         Send, {ENTER}
-        Sleep, 25
-        Send, {AltDown}Y{AltUp}
+
+        waitForWindow("Address - ")
+        Send, {AltDown}Y
+        SEnd, {AltUp}
         currVal := copyCell()
+        ; msgbox, %currVal%
         newVal := makePastAddress(currVal)
+        Sleep, 10
         Send, %newVal%
         Send, {TAB}
         Send, I
         Send, {TAB 7}
-        Send, {Space}
+        ; Send, {Space}
         Send, {F8}
         ;in case it got marked preferred
-        IfWinActive, Address
-        {
-            Send, {ENTER}
-            Send, {AltDown}Y{AltUp}
-            send, {Tab 8}
-            Send, {Space}
-            Send, {F8}
-        }
+        ; IfWinActive, Address
+        ; {
+        ;     Send, {ENTER}
+        ;     Send, {AltDown}Y{AltUp}
+        ;     send, {Tab 8}
+        ;     Send, {Space}
+        ;     Send, {F8}
+        ; }
 
     }
     return
@@ -82,7 +91,7 @@ updateTelephone(newStatus)
         newVal := makePastTelephone(currVal)
         Send, %newVal%
         Send, {TAB}
-        Send, {Space}
+        ; Send, {Space}
         Send, {Tab 5}
         Send, I
         Send, {F8}
@@ -100,13 +109,32 @@ updateEcon(newStatus)
     {
         Send, {TAB 2}
     }
-    SEnd, K
+    IfEqual, newStatus, K
+    {
+        Send, K
+    } Else IfEqual, newStatus, P
+    {
+        Send, I
+        Send, {tab 8}
+        ; Send, {Space}
+    }
+    SEnd, {F8}
+    return
+}
+updateEmployment(newStatus)
+{
+    Send, {TAB 3}
+    Send, FE
+    Send, {TAB 15}
+    Send, {Space}
+
     SEnd, {F8}
     return
 }
 #Include, windowPresent.ahk
 updateBioInfo(updateVal)
 {
+    Sleep, 10
     ;mark as last known
     moveTo(dbName)
     If windowPresent("Email")
@@ -124,6 +152,10 @@ updateBioInfo(updateVal)
     Else If windowPresent("eContact")
     {
         updateEcon(updateVal)
+    }
+    Else If windowPresent("Employment")
+    {
+        updateEmployment(updateVal)
     }
     return
 }
