@@ -201,6 +201,8 @@ return
             return
         }
         Sleep, 10
+        Send, {AltDown}{3}
+        Send, {AltUp}
     }
     return
 }
